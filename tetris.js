@@ -1,6 +1,7 @@
 const canvas = document.getElementById('tetris')
 const context = canvas.getContext('2d')
 context.scale(20, 20)
+scaleFactor = window.innerWidth / 340 * 20
 
 function arenaSweep () { // checks for full rows
   let rowCount = 1
@@ -101,8 +102,13 @@ function drawMatrix (matrix, offset) {
 }
 
 function draw () {
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    canvas.width = window.innerWidth
+    canvas.height = 20 * scaleFactor
+    context.scale(scaleFactor, scaleFactor)
+}
   context.fillStyle = '#000'
-  context.fillRect(0, 0, canvas.width + 100, canvas.height)
+  context.fillRect(0, 0, canvas.width, canvas.height)
   drawMatrix(arena, {
     x: 0,
     y: 0
