@@ -262,6 +262,7 @@ function moveTouch (event) {
     startTouchY = endTouchY
   }
   if (startTouchY - endTouchY > 100) {
+    startTouchY = endTouchY
     savePiece()
   }
   if (Math.abs(startTouchX - endTouchX) > 10) {
@@ -273,7 +274,7 @@ function moveTouch (event) {
 function endTouch (event) {
   endTouchX = event.changedTouches[0].screenX
   endTouchY = event.changedTouches[0].screenY
-  if ((Math.abs(startTouchY - endTouchY) < 1) && (Math.abs(startTouchX - endTouchX) < 1)) {
+  if ((Math.abs(startTouchY - endTouchY) < 3) && (Math.abs(startTouchX - endTouchX) < 3)) {
     playerRotate(1)
   }
 }
