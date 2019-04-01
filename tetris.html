@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<style>
+	html, body {
+		overflow: hidden;
+	}
+	body {
+		position: relative;
+		background-color: #292421;
+	}
+	#container {
+		border-style: solid;
+		border-color: #75675E;
+		border-width: 2px;
+		width: 340px;
+		height: 100px;
+		background-color: #000;
+	}
+	#tetrisBox {
+		border-style: solid;
+		border-color: #75675E;
+		border-width: 2px;
+		display: inline-block;
+	}
+	#score {
+		position: relative;
+		bottom: 15px;
+		text-align: center;
+		background-color: #000;
+		color: yellow;
+		font-size: 40px;
+		font-family: fantasy;
+	}
+	#nextPiece {
+		background-color: black;
+		float: right;
+		color: white;
+		width: 100px;
+		height: 400px;
+		border-style: solid;
+		border-width: 2px;
+		border-color: #75675E;
+	}
+
+	#instructions {
+		width: 200px;
+		border-style: solid;
+		border-color: white;
+	}
+	#instructionText {
+		color: yellow;
+		font-size: 12px;
+		font-family: fantasy;
+	}
+	.left {
+		float: left;
+	}
+
+</style>
+<head>
+	<title>Tetris</title>
+</head>
+<body scroll="no">
+	<div id="tetrisBox">
+		<canvas id="tetris" width="340" height="400"></canvas>	
+	</div>
+	<div id="container">
+		<p id="score">oops</p>
+	</div>
+
+<div style="border-style: solid; border-color: white; width: 340px;">
+	<div style="float: left; width: 49%;">
+		<div style="padding: 1px;">
+			<img src="images/keyboard_key_q.png" alt="Q" style="float: left;">
+			<img src="images/keyboard_key_w.png" alt="W" style="float: left;">
+			<p id='instructionText'> - Rotate piece</p>
+		</div>
+		<div style="padding: 1px;">
+			<img src="images/keyboard_key_a.png" alt="A" class="left">
+			<img src="images/keyboard_key_s.png" alt="S" class="left">
+			<img src="images/keyboard_key_d.png" alt="D" class="left">
+			<p id="instructionText">- Move Piece</p>
+		</div>
+	</div>
+	<div style="float: left; width: 49%;">
+		<div style="padding: 1px;">
+			<img src="images/keyboard_key_up.png" alt="Q" style="float: left;">
+			<p id='instructionText'> - Rotate piece</p>
+		</div>
+		<div style="padding: 1px;">
+			<img src="images/keyboard_key_left.png" alt="LEFT" class="left">
+			<img src="images/keyboard_key_down.png" alt="DOWN" class="left">
+			<img src="images/keyboard_key_right.png" alt="RIGHT" class="left">
+			<p id="instructionText">- Move Piece</p>
+		</div>
+	</div>
+	<div>
+		<img src="images/keyboard_key_space.png" alt="SPACE" class="left">
+		<p id="instructionText">- Save Piece</p>
+	</div>
+</div>
+<script src="tetris.js"></script>
+</body>
+</html>
