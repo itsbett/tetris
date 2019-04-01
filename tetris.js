@@ -3,6 +3,14 @@ const context = canvas.getContext('2d')
 context.scale(20, 20)
 scaleFactor = window.innerWidth / 340 * 20
 
+function setWindowSize () {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    canvas.width = window.innerWidth
+    canvas.height = 20 * scaleFactor
+    context.scale(scaleFactor, scaleFactor)
+  }
+}
+
 function arenaSweep () { // checks for full rows
   let rowCount = 1
   outer: for (let y = arena.length - 1; y > 0; --y) {
@@ -102,11 +110,6 @@ function drawMatrix (matrix, offset) {
 }
 
 function draw () {
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-    canvas.width = window.innerWidth
-    canvas.height = 20 * scaleFactor
-    context.scale(scaleFactor, scaleFactor)
-}
   context.fillStyle = '#000'
   context.fillRect(0, 0, canvas.width, canvas.height)
   drawMatrix(arena, {
@@ -233,7 +236,7 @@ function updateScore () {
   document.getElementById('score').innerText = player.score
 }
 
-window.addEventListener('keydown', event => {
+function keyInput (event) {
   if (event.keyCode === 37 || event.keyCode === 65) { // left or a
     playerMove(-1)
   } else if (event.keyCode === 39 || event.keyCode === 68) { // right or d
@@ -247,7 +250,7 @@ window.addEventListener('keydown', event => {
   } else if (event.keyCode === 32) {
     savePiece()
   }
-})
+}
 
 function startTouch (event) {
   startTouchX = event.changedTouches[0].screenX
@@ -260,23 +263,27 @@ function moveTouch (event) {
   if (startTouchY - endTouchY < -20) {
     playerDrop()
     startTouchY = endTouchY
+    tap = false
   }
   if (startTouchY - endTouchY > 100) {
     startTouchY = endTouchY
     savePiece()
+    tap = false
   }
   if (Math.abs(startTouchX - endTouchX) > 10) {
     calculateMove()
     startTouchX = endTouchX
+    tap = false
   }
 }
 
 function endTouch (event) {
   endTouchX = event.changedTouches[0].screenX
   endTouchY = event.changedTouches[0].screenY
-  if ((Math.abs(startTouchY - endTouchY) < 3) && (Math.abs(startTouchX - endTouchX) < 3)) {
+  if ((Math.abs(startTouchY - endTouchY) < 3) && (Math.abs(startTouchX - endTouchX) < 3) && tap) {
     playerRotate(1)
   }
+  tap = true
 }
 
 function calculateMove () {
@@ -369,6 +376,7 @@ let startTouchX = 0
 let endTouchX = 0
 let startTouchY = 0
 let endTouchY = 0
+let tap = true
 
 function start () {
   createShapeQueue()
@@ -377,9 +385,10 @@ function start () {
   updateScore()
   drawQueueArea()
   update()
+  window.addEventListener('touchstart', startTouch)
+  window.addEventListener('touchmove', moveTouch)
+  window.addEventListener('touchend', endTouch)
+  window.addEventListener('keydown', keyInput)
 }
 
-window.addEventListener('load', start)
-window.addEventListener('touchstart', startTouch)
-window.addEventListener('touchmove', moveTouch)
-window.addEventListener('touchend', endTouch)
+window.addEventListener('load', setWindowSize)
